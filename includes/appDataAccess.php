@@ -4,6 +4,15 @@ include_once 'genericDataAccess.inc.php';
 
 //Example of data access layer below
 
+function insertLocation($master_id, $location_id, $lat, $long){
+
+	$sql = "INSERT INTO `ciam1324`.`dv_test_locations` \n"
+	. "(`Master_ID`, `LocationID`, `Geo_location`, `Updated`) \n"
+	. "VALUES ($mater_id, $location_id, GeomFromText('POINT($lat $long)',0), CURRENT_TIMESTAMP);";
+
+	return $sql
+}
+
 function getOrderHistory(){
 		
 	$sql = "SELECT c.firstName, c.lastName,\n"
