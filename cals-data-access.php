@@ -17,7 +17,9 @@
 			break;
 		case 'getTestDataByLocation':
                     	if(isset($_GET['LocationID']) && !empty($_GET['LocationID'])){
-				getTestDataByLocation($_GET['LocationID']);
+                        $ret_caller['function'] = "getTestDataByLocation";
+                        $ret_caller['data'] = getTestDataByLocation($_GET['LocationID']);
+                        
 			}else{
 				echo "missing parameter";
 			}

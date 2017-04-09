@@ -38,7 +38,9 @@ function getTestDataByLocation($locationId) {
         
 	
 	//Call the function for output
-	fetchAllRecords($sql, $parameters);
+	$results = fetchAllRecords($sql, $parameters);
+        
+        return $results;
 }
 
 function getAllTestLocations() {
