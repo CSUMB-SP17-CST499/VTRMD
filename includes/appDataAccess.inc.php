@@ -27,16 +27,40 @@ function insertLocation($master_id, $location_id, $lat, $long){
 	return $result;
 }
 
+function getTestDataByLocation($locationId) {
+
+	$sql = "SELECT * FROM `dv_calspeed_data` \n"
+               . "WHERE `dv_calspeed_data`.`LocationID` = :LocationID";
+	
+	//The named parameters for this call	   
+	$parameters = array();
+	$parameters[':LocationID'] = $locationId;
+        
+	
+	//Call the function for output
+	fetchAllRecords($sql, $parameters);
+}
+
 function getAllTestLocations() {
 
-	$sql = "SELECT * FROM `oe_order`";
-	
+	$sql = "SELECT \n"
+                . "`Master_ID`, \n"
+                . "`LocationID`, \n"
+                . "X(`Geo_location`) AS Latitiude, \n"
+                . "Y(`Geo_location`) AS Longitude, \n"
+                . "`Updated` \n"
+                . "FROM `dv_test_locations` \n"
+                . "WHERE 1";
+        
 	//The named parameters for this call	   
 	
 	
-	//Call the function for UI output
-	fetchAllRecords($sql);
+	//Call the function for output
+	$results = fetchAllRecords($sql);
+        
+        return $results;
 }
+
 
 function getDashboard(){
 	
