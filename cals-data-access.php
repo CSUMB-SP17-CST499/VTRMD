@@ -38,6 +38,7 @@
 			break;
 	}
         
+	header('Content-Type: text/json; charset=UTF-8'); 
         echo json_encode($ret_caller);
 
 ?>
