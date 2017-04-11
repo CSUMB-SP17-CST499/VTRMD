@@ -7,15 +7,37 @@
 	<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcCMvNetnyr3W_pvvDpoVWaT7WKzKqlXc&callback=initMap">
 	</script>
+        
+        <!-- Cal Speed Application -->        
+        <script src="Scripts/js/async.js" type="text/javascript" ></script>
+        <script src="Scripts/js/data.js" type="text/javascript" ></script>
+        
 </head>
 <body onload="pageLoad()">
 <h3>Data Viz Web Application</h3>
 
 <script>
 	$( document ).ready(function() {
-		console.log( "ready!" );
+	console.log( "ready!" );
 	});
 </script>
+
+
+<p onclick="getAllTestLocations()">Click here for Sample json from getAllTestLocations(): </p>
+<div id="data-content" >
+    
+</div>
+
+<br/> <br/>
+
+<p onclick="getTestDataByLocation('1208')">Click here for Sample json from getTestByLocation():</p>
+<div id="data-content-location" >
+    
+</div>
+
+    <script>
+
+    </script>
 
 </body>
 </html>
