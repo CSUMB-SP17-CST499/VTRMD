@@ -1,4 +1,89 @@
+/* Set map styles */
 #map {
     height: 400px;
     width: 100%;
+}
+
+/* Set's the styles of each html element by target string */
+p[target='AT&T Wireless']{
+    background-color: red;
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+}
+
+p[target='AT&T Services']{
+    background-color: orange;
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+}
+p[target='NA']{
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    background-color: grey;
+}
+p[target='Sprint']{
+    background-color: yellow;
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+}
+
+p[target='Verizon Business']{
+    background-color: lightsalmon;
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+}
+p[target='Abovenet Communications']{
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    background-color: saddlebrown;
+}
+p[target='Equinix']{
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    background-color: mediumspringgreen;
+}
+p[target='T-Mobile']{
+     border-radius: 25px 25px 25px 25px;
+     width: 50px;
+     height: 50px;
+     text-align: center;
+     float: left;
+     background-color: hotpink;
+}
+p[target='Amazon']{
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    background-color: purple;
+}
+p[target='*']{
+    border-radius: 25px 25px 25px 25px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    background-color: papayawhip;
 }
