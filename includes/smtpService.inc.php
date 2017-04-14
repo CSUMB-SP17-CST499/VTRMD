@@ -1,38 +1,36 @@
-<php?
+<?php
+
+include_once 'appDataAcess.inc.php';
 
 class SMTPService {
 
 private $to = "rciampa@csumb.edu";
 private $subject;
 private $message;
-private $wrap = 80;
 
 
-void ____construct($message, $subject){
+function __construct($message, $subject){
     $this->$message = $message;
     $this->$subject = $subject;
 }
 
+private function dblogSentMail($to, $subject, $message){
+    logEmailMessage($to, $subject, $message);
+}
 
-public function sendMail(){
-    $message = wordwrap($message, $wrap, "\r\n");
+public function sendMail($lineLength = 80){
+    
+    //Call the class variables
+    global $to, $subject, $message;
+    
+    $message = wordwrap($message, $lineLength, "\r\n");
     if(mail($to, $subject, $message)){
-        dblogSentMail();
+        $this->dblogSentMail($to, $subject, $message);
     }
 }
 
-private function dblogSentMail(){
-
-
-
-}
-
 
 
 }
-
-
-
-
 
 ?>

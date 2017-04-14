@@ -138,16 +138,23 @@ function getGrossSalesToDate()
     return $record['GSTD'];
 }
 
-function getProductVolume(){
+function logEmailMessage($to, $subject, $message){
 	
-	$sql = "SELECT p.productId, p.productName, p.price,\n"
-	. "SUM(qty) AS 'qty', SUM(qty * p.price) AS 'Sales' FROM `oe_orderProduct` op\n"
-    . "RIGHT JOIN `oe_product` p\n"
-    . "ON op.productId = p.productId\n"
-    . "GROUP BY `productId`\n"
-    . "ORDER BY Sales DESC";
+	$sql = "INSERT INTO `dv_emailLog`(`to`, `subject`, `message`) \n"
+                . "VALUES (:to,:subject,:message);";
+        
+        $parameters = array();
+        
+        $parameters[':to'] = $to;
+        $parameters[':subject'] = $subject;
+        $parameters[':message'] = $message;
+        
+        if(!insertRecord($sql, $parameters)){
+            //TODO: Log to local file on db insert failure
+        }
 	
-	uiGetProductVolume(fetchAllRecords($sql));
 }
+
+
 
 ?>
