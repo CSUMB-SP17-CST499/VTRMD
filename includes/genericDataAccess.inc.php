@@ -15,7 +15,7 @@ function fetchAllRecords($sql, $namedParameters = array()) {
 
 	$conn = createConn();
 
-	try{
+	try {
 		
 		//Prepare the sql and execute the statment
 		$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -23,15 +23,15 @@ function fetchAllRecords($sql, $namedParameters = array()) {
 		//Retieve all the rows
 		$records = $query -> fetchAll(PDO::FETCH_ASSOC);
 
-	}catch(Exception $ex){
+	} catch(Exception $ex) {
 		//Log the error and send email
 
 
 		$records = null; //set null for caller
 	
-	}finally{
-		$conn = NULL;
-	}	
+	}
+	
+	$conn = NULL;	
 
 	return $records;
 }
@@ -43,22 +43,22 @@ function fetchRecord($sql, $namedParameters = array()) {
 
 	$conn = createConn();
 
-	try{
-	
-	//Prepare the sql and execute the statment
-	$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-	$query -> execute($namedParameters);
-	//Retieve all the rows
-	$record = $query -> fetch(PDO::FETCH_ASSOC);
+	try {
+		
+		//Prepare the sql and execute the statment
+		$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$query -> execute($namedParameters);
+		//Retieve all the rows
+		$record = $query -> fetch(PDO::FETCH_ASSOC);
 
-	}catch(Exception $ex){
+	} catch(Exception $ex) {
 		//Log the error and send email
 
 
 		$records = null; //set null for caller
-	}finally{
-		$conn = NULL;
-	}
+	} 
+
+	$conn = NULL;
 
 	return $record;
 }
@@ -70,20 +70,20 @@ function insertRecord($sql, $namedParameters = array()) {
 	
 	$conn = createSqlConn();
 	
-	try{
+	try {
 		
 		//Prepare the sql and execute the statment
 		$prepedPDO = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$isInserted = $prepedPDO -> execute($namedParameters);
 	
-	}catch(Exception $ex){
+	} catch(Exception $ex) {
 		//Log the error and send email
 
 		
 		$isInserted = false;
-	}finally{
-		$conn = null;
 	}
+	
+	$conn = null;
 
 	return $isInserted;
 }
