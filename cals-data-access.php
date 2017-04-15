@@ -9,10 +9,12 @@
                     $ret_caller['data'] = getAllTestLocations();
 			break;
 		case 'getTestDataByMasterID':
-			if(isset($_GET['client']) && !empty($_GET['client'])){
-				getClientOrders($_GET['client']);
+			if(isset($_GET['MasterID']) && !empty($_GET['MasterID'])){
+				$ret_caller['function'] = "getTestDataByMasterID";
+				$ret_caller['data'] = getTestDataByMasterID($_GET['MasterID']);
+				break;
 			}else{
-				echo "missing parameter";
+				$ret_caller['call_error'] = "missing parameter";
 			}
 			break;
 		case 'getTestDataByLocation':
@@ -21,7 +23,7 @@
                         $ret_caller['data'] = getTestDataByLocation($_GET['LocationID']);
                         
 			}else{
-				echo "missing parameter";
+				$ret_caller['call_error'] = "missing parameter";
 			}
 			break;
 		case 'dashboard':
