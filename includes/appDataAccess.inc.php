@@ -2,8 +2,11 @@
 
 include_once 'genericDataAccess.inc.php';
 
-//Example of data access layer below
 
+/*
+ * Inserts record rows into the dv_test_locations table. The dv_test_locations
+ * table is the first set in mormalization.
+ */
 function insertLocation($master_id, $location_id, $lat, $long){
 
 	$sql = "INSERT INTO `ciam1324`.`dv_test_locations` \n"
@@ -26,6 +29,33 @@ function insertLocation($master_id, $location_id, $lat, $long){
 	}
 	return $result;
 }
+
+/*
+ * Inserts records into the main dv_calspeed_data table for the CalSpeed web
+ * application.
+ */
+function insertCalSpeedData($data){
+    
+    $sql = "INSERT INTO `dv_calspeed_data` \n"
+         . "(`Master_ID`,) \n"
+         . "VALUES (`:Master_ID`) ;";
+    
+    $parameters = array();
+    $parameters[':Master_ID'] = $data[0];
+    
+    $result = array();
+    $result['rows_effected'] = 0;
+    $re = insertRecord($sql, $parameters);
+    if($re != null){
+        $result['rows_effected'] = $re;
+    }
+    
+    return $result;
+    
+}
+
+
+
 
 function getTestDataByLocation($locationId) {
 
@@ -82,13 +112,21 @@ function getDashboard(){
 	uiDashboard($dashboardItems);
 }
 
-function getOrdersToDate(){
+/*
+ * Fetches the total number of records in the visualization database.
+ * This query only fetches records rows which are based on master_id.
+ * The real number of tests 
+ */
+function getTotalNumberOfRecords(){
 	
-	$sql = "SELECT COUNT(`orderId`) AS 'OTD' FROM `oe_order` WHERE 1";
+	$sql = "SELECT COUNT(`*`) \n"
+             . "AS 'total_records' \n"
+             . "FROM `dv_test_locations` \n"
+             . "WHERE 1";
 	
 	$record = fetchRecord($sql);
 	
-	return $record['OTD'];
+	return $record['total_records'];
 }
 
 function getAverageItemCost()
