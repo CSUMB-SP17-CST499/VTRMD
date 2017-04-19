@@ -99,7 +99,7 @@ function getDashboard(){
 	$dashboardItems = array();
 	
 	//Get the total number of orders to date
-	$dashboardItems['Orders to Date'] = getOrdersToDate();
+	$dashboardItems['Total Records Onhand'] = getOrdersToDate();
 	//Get the average item cost at the OE
 	$dashboardItems['Average Item Cost'] = number_format(getAverageItemCost(),2);
 	//Get the average amout of all orders to date
