@@ -1,1 +1,15 @@
+#content-view-wrapper{
+    width: 1100px;
+    min-height: 600px;
+    margin: 0px auto 0px auto ;
+}
 
+#content-background-layer{
+    height: 100%;
+    width: 100%;
+}
+
+#content-dashboard{
+    width: 900px;
+    margin: 0px auto 0px auto;
+}

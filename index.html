@@ -8,38 +8,42 @@
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcCMvNetnyr3W_pvvDpoVWaT7WKzKqlXc&callback=initMap">
 	</script>
         
-        <!-- Cal Speed Application -->        
+        <!-- Cal Speed Application -->
+        <title>CalSPEED: Mobile Data Route Visualizer</title>
+        <meta name="author" content="CalSPPED Capstone 2017" />
+        
         <script src="Scripts/js/async.js" type="text/javascript" ></script>
         <script src="Scripts/js/data.js" type="text/javascript" ></script>
         
-        <link rel="stylesheet" type="text/css" href="Styles/map.css">
+        <link rel="stylesheet" type="text/css" href="Styles/map.css" />
+        <link rel="stylesheet" type="text/css" href="./Styles/theme-common.css" />
+        
+        <script>
+            $( document ).ready(function() {
+                console.log( "ready!" );
+            });
+        </script>
         
 </head>
-<body onload="pageLoad()">
-<h3>Data Viz Web Application</h3>
-
-<script>
-	$( document ).ready(function() {
-	console.log( "ready!" );
-	});
-</script>
-
-
-<p onclick="getAllTestLocations()">Click here for Sample json from getAllTestLocations(): </p>
-<div id="data-content" >
-    
-</div>
-
-<br/> <br/>
-
-<p onclick="getTestDataByLocation('1208')">Click here for Sample json from getTestByLocation():</p>
-<div id="data-content-location" >
-    
-</div>
-
-    <script>
-
-    </script>
-
+<body>
+    <div id="content-background-layer">
+        <div id="content-view-wrapper">
+            <h1>CalSPEED: Mobile Data Trace Route Visualizer</h1>
+            <div id="content-dashboard">
+                <p>Test text</p>
+            
+            
+            </div>
+        </div>
+        <footer>
+            <figure>
+		<img class="footerLogoImage" src="./Media/Images/csumb-logo-white.png" />
+            </figure>
+            <p>
+                All rights reserved &copy; Copyright
+            </p>
+        </footer>
+    </div> <!-- background <div> -->
 </body>
+
 </html>
