@@ -12,17 +12,27 @@ include_once "conn.inc.php";
  * Used to fetch a data table from the database
  */
 function fetchAllRecords($sql, $namedParameters = array()) {
-		
+
 	$conn = createConn();
 
-	//Prepare the sql and execute the statment
-	$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-	$query -> execute($namedParameters);
-	//Retieve all the rows
-	$records = $query -> fetchAll(PDO::FETCH_ASSOC);
+	try {
+		
+		//Prepare the sql and execute the statment
+		$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$query -> execute($namedParameters);
+		//Retieve all the rows
+		$records = $query -> fetchAll(PDO::FETCH_ASSOC);
+
+	} catch(Exception $ex) {
+		//Log the error and send email
+
+
+		$records = null; //set null for caller
 	
-	$conn = NULL;
+	}
 	
+	$conn = NULL;	
+
 	return $records;
 }
 
@@ -30,17 +40,26 @@ function fetchAllRecords($sql, $namedParameters = array()) {
  * Used to fetch a record from the database
  */
 function fetchRecord($sql, $namedParameters = array()) {
-		
+
 	$conn = createConn();
 
-	//Prepare the sql and execute the statment
-	$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-	$query -> execute($namedParameters);
-	//Retieve all the rows
-	$record = $query -> fetch(PDO::FETCH_ASSOC);
-	
+	try {
+		
+		//Prepare the sql and execute the statment
+		$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$query -> execute($namedParameters);
+		//Retieve all the rows
+		$record = $query -> fetch(PDO::FETCH_ASSOC);
+
+	} catch(Exception $ex) {
+		//Log the error and send email
+
+
+		$records = null; //set null for caller
+	} 
+
 	$conn = NULL;
-	
+
 	return $record;
 }
 
@@ -50,10 +69,23 @@ function fetchRecord($sql, $namedParameters = array()) {
 function insertRecord($sql, $namedParameters = array()) {
 	
 	$conn = createSqlConn();
-	//Prepare the sql and execute the statment
-	$scalar = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-	$scalar -> execute($namedParameters);
 	
+	try {
+		
+		//Prepare the sql and execute the statment
+		$prepedPDO = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$isInserted = $prepedPDO -> execute($namedParameters);
+	
+	} catch(Exception $ex) {
+		//Log the error and send email
+
+		
+		$isInserted = false;
+	}
+	
+	$conn = null;
+
+	return $isInserted;
 }
 
 
