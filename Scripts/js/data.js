@@ -47,3 +47,22 @@ function getTestDataByLocation(locationId) {
  function cbGetTestDataByLocation() {
 	document.getElementById("data-content-location").innerHTML = xmlhttpRequest.responseText;
 }
+
+/*
+ * Gets the dashboard panes for the CalSpeed metedata
+ */
+function getDashboard(){
+    	dataUriCall = dataUri + "fnc=getDashboard" + "&rand=" + Math.random();
+	loadAsyncData(encodeURI(dataUriCall), "GET", function() {
+		cbGetDashboard();
+	}, true, null);
+}
+
+function cbGetDashboard(){
+    var dashboardData = JSON.parse(xmlhttpRequest.responseText);
+    var Div = document.createElement("div");
+    Div.innerHTML = "Hellooooooo!"; //dashboardData["func"];
+    
+    document.getElementById("dashboard-content").appendChild(Div);
+    
+}

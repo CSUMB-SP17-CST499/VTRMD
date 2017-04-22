@@ -8,7 +8,10 @@
 }
 
 body{
+    background-image: url("../Media/Images/sf-bay-golden-gate.jpg");
     background-color: darkblue;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* Common footer for CalSPEED */
