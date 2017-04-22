@@ -118,12 +118,12 @@ function getDashboard()
 	//Get the average total RTT time for the California West tests
 	$dashboardItems['California West Total RTT Average'] = 
                 getAverageCaliforniaWestRttEndToEnd();
-	//Get the average total RTT time for the East Coast test 
-	$dashboardItems['East Coast Total RTT Average'] = 
-                getAverageEastCoastRttEndToEnd();
 	//Get the number of Healthy Choices in OE
 	$dashboardItems['Oregon West Total RTT Average'] =
                 getAverageOregonWestRttEndToEnd();
+	//Get the average total RTT time for the East Coast test 
+	$dashboardItems['East Coast Total RTT Average'] = 
+                getAverageEastCoastRttEndToEnd();
 	
 	return $dashboardItems;
 }
@@ -136,14 +136,14 @@ function getDashboard()
 function getTotalNumberOfRecords()
 {
 	
-	$sql = "SELECT COUNT(`*`) \n"
-             . "AS 'total_records' \n"
-             . "FROM `dv_test_locations` \n"
+	$sql = "SELECT COUNT(*) \n"
+             . "AS 'total' \n"
+             . "FROM `dv_calspeed_data` \n"
              . "WHERE 1;";
 	
-	$record = fetchRecord($sql);
+	$result = fetchRecord($sql);
 	
-	return $record['total_records'];
+	return $result['total'];
 }
 
 
