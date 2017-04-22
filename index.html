@@ -2,11 +2,7 @@
 <html>
 <head>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="Scripts/js/mapper.js"></script>
-	<script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcCMvNetnyr3W_pvvDpoVWaT7WKzKqlXc&callback=initMap">
-	</script>
+
         
         <!-- Cal Speed Application -->
         <title>CalSPEED: Mobile Data Route Visualizer</title>
@@ -14,17 +10,12 @@
         
         <script src="Scripts/js/async.js" type="text/javascript" ></script>
         <script src="Scripts/js/data.js" type="text/javascript" ></script>
+        <script src="Scripts/js/gmap.js" type="text/javascript" ></script>
         
         <link rel="stylesheet" type="text/css" href="Styles/map.css" />
         <link rel="stylesheet" type="text/css" href="./Styles/theme-common.css" />
         <link rel="stylesheet" type="text/css" href="./Styles/theme.css" />
                 
-        <script>
-            $( document ).ready(function() {
-                console.log( "ready!" );
-                getDashboard();
-            });
-        </script>
         
 </head>
 <body>
@@ -33,7 +24,9 @@
             <div id="data-content-contianer">
                 <div id="dashboard-content">
                     <p>Dashboard:</p>
-            
+                    <script>
+                        getDashboard();
+                    </script>
             
                 </div>
             </div>
