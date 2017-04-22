@@ -5,10 +5,14 @@
  * @author rciampa
  */
 class smtpConf {
-    private $siteAdministrator = "Richard Ciampa <rciampa@csumb.edu>";
+    private static $siteAdministrator = "Richard Ciampa <rciampa@csumb.edu>";
     
+    public function __construct() {
+    }
+
+
     public static function getErrorSendToAddress(){
-        return $this->siteAdministrator;    
+        return self::$siteAdministrator;    
     }
     
 }
