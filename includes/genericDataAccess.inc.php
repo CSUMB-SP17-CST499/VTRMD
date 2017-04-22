@@ -7,12 +7,8 @@
  * Include our connection to the RDBMS
  */
 include_once "conn.inc.php";
-<<<<<<< HEAD
-include_once "./config/smtp.config.inc.php";
-=======
-//include_once './smtpService.inc.php';
-//include_once "./config/smtp.config.inc.php";
->>>>>>> ui-dashboard
+include_once 'smtpService.inc.php';
+include_once "config/smtp.config.inc.php";
 
 /*
  * Used to fetch a data table from the database
@@ -31,18 +27,13 @@ function fetchAllRecords($sql, $namedParameters = array()) {
 
 	} catch(Exception $ex) {
             //Log the error and send email
-<<<<<<< HEAD
-            $mailError = new SMTPService(
-                    smtpConf::getErrorSendToAddress(),
-=======
             $mailError = new SMTPService(smtpConf::getErrorSendToAddress(),
->>>>>>> ui-dashboard
                     $ex->getMessage(),
                     "VTRMD: fetchAllRecords() Exception Occurred!");
             
-            if($mailError->sendMail()){
-             //TODO: Log send to database   
-            }
+//            if($mailError->sendMail()){
+//             //TODO: Log send to database   
+//            }
             
             $records = null; //set null for caller
 	
@@ -68,18 +59,13 @@ function fetchRecord($sql, $namedParameters = array()) {
 
 	} catch(Exception $ex) {
 	    //Log the error and send email
-<<<<<<< HEAD
-            $mailError = new SMTPService(
-                    smtpConf::getErrorSendToAddress(),
-=======
             $mailError = new SMTPService(smtpConf::getErrorSendToAddress(),
->>>>>>> ui-dashboard
                     $ex->getMessage(),
                     "VTRMD: fetchRecord() Exception Occurred!");
             
-            if($mailError->sendMail()){
-             //TODO: Log send to database   
-            }
+//            if($mailError->sendMail()){
+//             //TODO: Log send to database   
+//            }
 
 
 		$record = null; //set null for caller
@@ -108,9 +94,9 @@ function insertRecord($sql, $namedParameters = array()) {
                     $ex->getMessage(),
                     "VTRMD: insertRecord() Exception Occurred!");
             
-            if($mailError->sendMail()){
-             //TODO: Log send to database   
-            }
+//            if($mailError->sendMail()){
+//             //TODO: Log send to database   
+//            }
 
 		
 		$isInserted = false;
