@@ -7,6 +7,7 @@
  * Include our connection to the RDBMS
  */
 include_once "conn.inc.php";
+include_once "./config/smtp.config.inc.php";
 
 /*
  * Used to fetch a data table from the database
@@ -15,24 +16,29 @@ function fetchAllRecords($sql, $namedParameters = array()) {
 
 	$conn = createConn();
 
-	try {
-		
-		//Prepare the sql and execute the statment
-		$query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$query -> execute($namedParameters);
-		//Retieve all the rows
-		$records = $query -> fetchAll(PDO::FETCH_ASSOC);
+	try {	
+	    //Prepare the sql and execute the statment
+
+            $query = $conn -> prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $query -> execute($namedParameters);
+            //Retieve all the rows
+            $records = $query -> fetchAll(PDO::FETCH_ASSOC);
 
 	} catch(Exception $ex) {
-		//Log the error and send email
-
-
-		$records = null; //set null for caller
+            //Log the error and send email
+            $mailError = new SMTPService(
+                    smtpConf::getErrorSendToAddress(),
+                    $ex->getMessage(),
+                    "VTRMD: fetchAllRecords() Exception Occurred!");
+            
+            if($mailError->sendMail()){
+             //TODO: Log send to database   
+            }
+            
+            $records = null; //set null for caller
 	
 	}
 	
-	$conn = NULL;	
-
 	return $records;
 }
 
@@ -52,13 +58,19 @@ function fetchRecord($sql, $namedParameters = array()) {
 		$record = $query -> fetch(PDO::FETCH_ASSOC);
 
 	} catch(Exception $ex) {
-		//Log the error and send email
+	    //Log the error and send email
+            $mailError = new SMTPService(
+                    smtpConf::getErrorSendToAddress(),
+                    $ex->getMessage(),
+                    "VTRMD: fetchRecord() Exception Occurred!");
+            
+            if($mailError->sendMail()){
+             //TODO: Log send to database   
+            }
 
 
-		$records = null; //set null for caller
+		$record = null; //set null for caller
 	} 
-
-	$conn = NULL;
 
 	return $record;
 }
@@ -77,13 +89,19 @@ function insertRecord($sql, $namedParameters = array()) {
 		$isInserted = $prepedPDO -> execute($namedParameters);
 	
 	} catch(Exception $ex) {
-		//Log the error and send email
+            //Log the error and send email
+            $mailError = new SMTPService(
+                    smtpConf::getErrorSendToAddress(),
+                    $ex->getMessage(),
+                    "VTRMD: insertRecord() Exception Occurred!");
+            
+            if($mailError->sendMail()){
+             //TODO: Log send to database   
+            }
 
 		
 		$isInserted = false;
 	}
-	
-	$conn = null;
 
 	return $isInserted;
 }
