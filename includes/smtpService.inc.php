@@ -1,35 +1,34 @@
 <?php
-
-include_once 'appDataAcess.inc.php';
-
+/**
+ * Description of smtpService.inc.php:
+ *
+ * @author rciampa
+ */
 class SMTPService {
 
-private $to = "rciampa@csumb.edu";
+private $to;
 private $subject;
 private $message;
-
-
-function __construct($message, $subject){
-    $this->$message = $message;
-    $this->$subject = $subject;
+private $lineLength;
+        
+function __construct($to, $subject, $message){
+    $this->message = $message;
+    $this->subject = $subject;
+    $this->to = $to;
 }
 
-private function dblogSentMail($to, $subject, $message){
-    logEmailMessage($to, $subject, $message);
+function setLineLength($length = 70){
+    $this->lineLength = $length;
 }
 
-public function sendMail($lineLength = 80){
+public function sendMail(){
     
-    //Call the class variables
-    global $to, $subject, $message;
+    $this->message = wordwrap($this->message, $this->lineLength, "\r\n");
     
-    $message = wordwrap($message, $lineLength, "\r\n");
-    if(mail($to, $subject, $message)){
-        $this->dblogSentMail($to, $subject, $message);
-    }
+    $isSent = mail($this->to, $this->subject, $this->message);
+    
+    return $isSent;
 }
-
-
 
 }
 

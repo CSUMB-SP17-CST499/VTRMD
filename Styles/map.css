@@ -1,7 +1,7 @@
 /* Set map styles */
-#map {
-    height: 400px;
-    width: 100%;
+#gmap {
+    height: 800px;
+    width: 30%;
 }
 
 /* Set's the styles of each html element by target string */

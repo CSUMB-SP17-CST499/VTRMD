@@ -37,11 +37,12 @@ function loadAsyncData(url, recMethod, cfunc, isAsync, pstDataStr) {
 
 }
 
-function myFunction() {
-
-	loadAsyncData("ajax_info.txt", function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-		}
-	});
-}
+////sample call
+//function myFunction() {
+//
+//	loadAsyncData("ajax_info.txt", function() {
+//		if (xmlhttpRequest.readyState == 4 && xmlhttpRequest.status == 200) {
+//			document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+//		}
+//	});
+//}
