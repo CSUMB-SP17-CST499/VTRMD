@@ -17,22 +17,25 @@
         
         <link rel="stylesheet" type="text/css" href="Styles/map.css" />
         <link rel="stylesheet" type="text/css" href="./Styles/theme-common.css" />
-        
+        <link rel="stylesheet" type="text/css" href="./Styles/theme.css" />
+                
         <script>
             $( document ).ready(function() {
                 console.log( "ready!" );
+                getDashboard();
             });
         </script>
         
 </head>
 <body>
-    <div id="content-background-layer">
         <div id="content-view-wrapper">
             <h1>CalSPEED: Mobile Data Trace Route Visualizer</h1>
-            <div id="content-dashboard">
-                <p>Test text</p>
+            <div id="data-content-contianer">
+                <div id="dashboard-content">
+                    <p>Dashboard:</p>
             
             
+                </div>
             </div>
         </div>
         <footer>
@@ -43,7 +46,6 @@
                 All rights reserved &copy; Copyright
             </p>
         </footer>
-    </div> <!-- background <div> -->
 </body>
 
 </html>

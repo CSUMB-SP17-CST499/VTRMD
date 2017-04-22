@@ -18,17 +18,19 @@
 			}
 			break;
 		case 'getTestDataByLocation':
-                    	if(isset($_GET['LocationID']) && !empty($_GET['LocationID'])){
+                    if(isset($_GET['LocationID']) && !empty($_GET['LocationID'])){
                         $ret_caller['function'] = "getTestDataByLocation";
                         $ret_caller['data'] = getTestDataByLocation($_GET['LocationID']);
                         
-			}else{
-				$ret_caller['call_error'] = "missing parameter";
-			}
-			break;
-		case 'dashboard':
-			getDashboard();
-			break;
+                    }else{
+                        $ret_caller['call_error'] = "missing parameter";        
+                    }
+                    break;
+		case 'getDashboard':
+                    getDashboard();
+                    $ret_caller['function'] = "getDashboard";
+                    $ret_caller['data'] = getDashboard();
+                    break;
 		case 'orderHist':
 			getOrderHistory();
 			break;

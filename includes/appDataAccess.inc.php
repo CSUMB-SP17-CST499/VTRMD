@@ -120,12 +120,10 @@ function getDashboard()
                 getAverageCaliforniaWestRttEndToEnd();
 	//Get the average total RTT time for the East Coast test 
 	$dashboardItems['East Coast Total RTT Average'] = 
-                getAverageEastCostRttEndToEnd();
+                getAverageEastCoastRttEndToEnd();
 	//Get the number of Healthy Choices in OE
 	$dashboardItems['Oregon West Total RTT Average'] =
                 getAverageOregonWestRttEndToEnd();
-	//Get the gross sales to date
-	$dashboardItems['Gross Sales to Date'] = getGrossSalesToDate();
 	
 	return $dashboardItems;
 }
@@ -209,18 +207,5 @@ function getAverageOregonWestRttEndToEnd($dec_places = 2)
     return number_format($result['OWRTT_AVG'], $dec_places);
 }
 
-
-
-function getProductVolume(){
-	
-	$sql = "SELECT p.productId, p.productName, p.price,\n"
-	. "SUM(qty) AS 'qty', SUM(qty * p.price) AS 'Sales' FROM `oe_orderProduct` op\n"
-    . "RIGHT JOIN `oe_product` p\n"
-    . "ON op.productId = p.productId\n"
-    . "GROUP BY `productId`\n"
-    . "ORDER BY Sales DESC";
-	
-	uiGetProductVolume(fetchAllRecords($sql));
-}
 
 ?>

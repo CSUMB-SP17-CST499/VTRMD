@@ -4,12 +4,15 @@
     margin: 0px auto 0px auto ;
 }
 
-#content-background-layer{
-    height: 100%;
-    width: 100%;
+
+#dashboard-content{
+    width: 1100px;
+    margin: 0px auto 0px auto;
 }
 
-#content-dashboard{
-    width: 900px;
-    margin: 0px auto 0px auto;
+/*  #584b68 */
+div.dashbaord-pane{
+    background-color: rgba(119, 101, 140, 0.5);
+    border-radius: 10px;
+    
 }
