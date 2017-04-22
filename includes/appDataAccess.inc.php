@@ -1,4 +1,9 @@
 <?php
+/**
+ * Description of appDataAccess.inc.php: 
+ *
+ * @author rciampa
+ */
 
 include_once 'genericDataAccess.inc.php';
 
@@ -7,7 +12,8 @@ include_once 'genericDataAccess.inc.php';
  * Inserts record rows into the dv_test_locations table. The dv_test_locations
  * table is the first set in mormalization.
  */
-function insertLocation($master_id, $location_id, $lat, $long){
+function insertLocation($master_id, $location_id, $lat, $long)
+{
 
 	$sql = "INSERT INTO `ciam1324`.`dv_test_locations` \n"
 	. "(`Master_ID`, `LocationID`, `Geo_location`, `Updated`) \n"
@@ -34,7 +40,8 @@ function insertLocation($master_id, $location_id, $lat, $long){
  * Inserts records into the main dv_calspeed_data table for the CalSpeed web
  * application.
  */
-function insertCalSpeedData($data){
+function insertCalSpeedData($data)
+{
     
     $sql = "INSERT INTO `dv_calspeed_data` \n"
          . "(`Master_ID`,) \n"
@@ -54,10 +61,12 @@ function insertCalSpeedData($data){
     
 }
 
-
-
-
-function getTestDataByLocation($locationId) {
+/*
+ * Retrieves a set of test by location id in the CalSpeed database table
+ * the field used is Location_ID.
+ */
+function getTestDataByLocation($locationId)
+{
 
 	$sql = "SELECT * FROM `dv_calspeed_data` \n"
                . "WHERE `dv_calspeed_data`.`LocationID` = :LocationID";
@@ -73,7 +82,12 @@ function getTestDataByLocation($locationId) {
         return $results;
 }
 
-function getAllTestLocations() {
+/*
+ * Retieves all the test locations that are currently held in the CalSpeed
+ * databse.
+ */
+function getAllTestLocations()
+{
 
 	$sql = "SELECT \n"
                 . "`Master_ID`, \n"
@@ -82,34 +96,38 @@ function getAllTestLocations() {
                 . "Y(`Geo_location`) AS Longitude, \n"
                 . "`Updated` \n"
                 . "FROM `dv_test_locations` \n"
-                . "WHERE 1";
-        
-	//The named parameters for this call	   
-	
-	
+                . "WHERE 1;";
+           
 	//Call the function for output
 	$results = fetchAllRecords($sql);
         
         return $results;
 }
 
-
-function getDashboard(){
+/*
+ * Creates the associative array for the dashboard. The dashboard holds
+ * the metadata about the current dataset in the CalSpeed database. 
+ */
+function getDashboard()
+{
 	
 	$dashboardItems = array();
 	
-	//Get the total number of orders to date
-	$dashboardItems['Total Records Onhand'] = getOrdersToDate();
-	//Get the average item cost at the OE
-	$dashboardItems['Average Item Cost'] = number_format(getAverageItemCost(),2);
-	//Get the average amout of all orders to date
-	$dashboardItems['Average Order Total'] = number_format(getAverageOrderCost(),2);
+	//Get the total number of records in the CalSpeed database
+	$dashboardItems['Total Record Count'] = getTotalNumberOfRecords();
+	//Get the average total RTT time for the California West tests
+	$dashboardItems['California West Total RTT Average'] = 
+                getAverageCaliforniaWestRttEndToEnd();
+	//Get the average total RTT time for the East Coast test 
+	$dashboardItems['East Coast Total RTT Average'] = 
+                getAverageEastCostRttEndToEnd();
 	//Get the number of Healthy Choices in OE
-	$dashboardItems['Healthy Choices'] = getHealthyChoiceCount();
+	$dashboardItems['Oregon West Total RTT Average'] =
+                getAverageOregonWestRttEndToEnd();
 	//Get the gross sales to date
 	$dashboardItems['Gross Sales to Date'] = getGrossSalesToDate();
 	
-	uiDashboard($dashboardItems);
+	return $dashboardItems;
 }
 
 /*
@@ -117,82 +135,92 @@ function getDashboard(){
  * This query only fetches records rows which are based on master_id.
  * The real number of tests 
  */
-function getTotalNumberOfRecords(){
+function getTotalNumberOfRecords()
+{
 	
 	$sql = "SELECT COUNT(`*`) \n"
              . "AS 'total_records' \n"
              . "FROM `dv_test_locations` \n"
-             . "WHERE 1";
+             . "WHERE 1;";
 	
 	$record = fetchRecord($sql);
 	
 	return $record['total_records'];
 }
 
-function getAverageItemCost()
+
+function getAverageOfcwStartRTT($dec_places = 2)
 {
-	$sql = "SELECT AVG(`price`) AS 'Average' FROM `oe_product` WHERE 1";
+	$sql = "SELECT AVG(`cwStartRTT`) AS Average \n"
+             . "FROM `dv_calspeed_data` WHERE 1;";
 	
-	$record = fetchRecord($sql);
+	$result = fetchRecord($sql);
 	
-	return $record['Average'];
+	return number_format($result['Avgerage'], $dec_places);
 	
 }
 
-function getAverageOrderCost()
+/*
+ * Gets the average round trip time (RTT) for all the California West
+ * tests in the CalSpeed database.
+ */
+function getAverageCaliforniaWestRttEndToEnd($dec_places = 2)
 {
-	$sql = "SELECT AVG(p.price * op.qty) AS 'AOT' \n"
-           . "FROM `oe_orderProduct` op\n"
-           . "INNER JOIN `oe_product` p\n"
-           . "ON p.productId = op.productId";
+    $sql = "SELECT AVG(`cwStartRTT` + `cwTnRTT1` + `cwTnRTT2` + `cwTnRTT3` + \n"
+         . "`cwTnRTT4` + `cwTnRTT5` + `cwTnRTT6` + `cwTnRTT7`\n"
+         . " + `cwTnRTT8` + `cwTnRTT9` + `cwTnRTT10` + `cwEndRTT`) AS CWRTT_AVG \n"
+         . "FROM `dv_calspeed_data` WHERE 1;";
+    
            
-    $record = fetchRecord($sql);
+    $result = fetchRecord($sql);
     
-    return $record['AOT'];
+    return number_format($result['CWRTT_AVG'], $dec_places);
 }
 
-function getHealthyChoiceCount()
+/*
+ * Gets the average round trip time (RTT) for all the East Coast
+ * tests in the CalSpeed database.
+ */
+function getAverageEastCoastRttEndToEnd($dec_places = 2)
 {
-	$sql = "SELECT COUNT(`productId`) AS 'HIC' FROM\n"
-	     . "`oe_product` WHERE `healthyChoice` = 1";
+    $sql = "SELECT AVG(`eStartRTT` + `eTnRTT1` + `eTnRTT2` + `eTnRTT3` + \n"
+         . "`eTnRTT4` + `eTnRTT5` + `eTnRTT6` + `eTnRTT7`\n"
+         . " + `eTnRTT8` + `eTnRTT9` + `eTnRTT10` + `eEndRTT`) AS EASTRTT_AVG \n"
+         . "FROM `dv_calspeed_data` WHERE 1;";
 		 
-	$record = fetchRecord($sql);
+	$result = fetchRecord($sql);
 	
-	return $record['HIC'];
+	return number_format($result['EASTRTT_AVG'], $dec_places);
 }
 
-function getGrossSalesToDate()
+/*
+ * Gets the average round trip time (RTT) for all the Oregon West
+ * tests in the CalSpeed database.
+ */
+function getAverageOregonWestRttEndToEnd($dec_places = 2)
 {
-	
-    $sql = "SELECT SUM(Sales) AS 'GSTD' FROM (\n"
-         . "SELECT SUM(qty * p.price) AS 'Sales'\n"
-         . "FROM `oe_orderProduct` op\n"
-         . "RIGHT JOIN `oe_product` p\n"
-         . "ON op.productId = p.productId\n"
-         . "GROUP BY op.`productId`) salesTable";
+    $sql = "SELECT AVG(`owStartRTT` + `owTnRTT1` + `owTnRTT2` + `owTnRTT3` + \n"
+         . "`owTnRTT4` + `owTnRTT5` + `owTnRTT6` + `owTnRTT7`\n"
+         . " + `owTnRTT8` + `owTnRTT9` + `owTnRTT10` + `owEndRTT`) \n"
+         . "AS OWRTT_AVG FROM `dv_calspeed_data` WHERE 1;";
     
-    $record = fetchRecord($sql);
+    $result = fetchRecord($sql);
 		   
-    return $record['GSTD'];
-}
-
-function logEmailMessage($to, $subject, $message){
-	
-	$sql = "INSERT INTO `dv_emailLog`(`to`, `subject`, `message`) \n"
-                . "VALUES (:to,:subject,:message);";
-        
-        $parameters = array();
-        
-        $parameters[':to'] = $to;
-        $parameters[':subject'] = $subject;
-        $parameters[':message'] = $message;
-        
-        if(!insertRecord($sql, $parameters)){
-            //TODO: Log to local file on db insert failure
-        }
-	
+    return number_format($result['OWRTT_AVG'], $dec_places);
 }
 
 
+
+function getProductVolume(){
+	
+	$sql = "SELECT p.productId, p.productName, p.price,\n"
+	. "SUM(qty) AS 'qty', SUM(qty * p.price) AS 'Sales' FROM `oe_orderProduct` op\n"
+    . "RIGHT JOIN `oe_product` p\n"
+    . "ON op.productId = p.productId\n"
+    . "GROUP BY `productId`\n"
+    . "ORDER BY Sales DESC";
+	
+	uiGetProductVolume(fetchAllRecords($sql));
+}
 
 ?>
